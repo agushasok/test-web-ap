@@ -9,6 +9,6 @@ export class TelegramService {
 
   constructor(
   ) {
-    this.tg = (window as any).Telegram.WebApp;
+    this.tg = (document.defaultView as any).Telegram.WebApp;
   }
 }

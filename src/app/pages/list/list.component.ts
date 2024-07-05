@@ -7,12 +7,9 @@ import { TelegramService } from "../../services/telegram.service";
   styleUrl: './list.component.less'
 })
 export class ListComponent implements OnInit {
-
   constructor(
     private readonly telegramService: TelegramService
-  ) {
-    this.telegramService.tg.MainButton.show();
-  }
+  ) {}
 
   ngOnInit() {
     this.telegramService.tg.MainButton.show();
