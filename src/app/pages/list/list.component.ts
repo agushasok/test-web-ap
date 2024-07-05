@@ -11,6 +11,7 @@ export class ListComponent implements OnInit {
   constructor(
     private readonly telegramService: TelegramService
   ) {
+    this.telegramService.tg.MainButton.show();
   }
 
   ngOnInit() {
