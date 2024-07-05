@@ -7,6 +7,8 @@ import { TelegramService } from "../../services/telegram.service";
   styleUrl: './list.component.less'
 })
 export class ListComponent implements OnInit {
+  tgCtx: any;
+
   constructor(
     private readonly telegramService: TelegramService
   ) {}
@@ -14,6 +16,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.telegramService.tg.ready();
     setTimeout(() => {
+      this.tgCtx = this.telegramService.tg;
       this.telegramService.tg.MainButton.show();
       this.telegramService.tg.setHeaderColor('#ff0000');
     }, 0);
