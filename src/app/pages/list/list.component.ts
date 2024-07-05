@@ -13,5 +13,6 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.telegramService.tg.MainButton.show();
+    this.telegramService.tg.setHeaderColor('ff0000');
   }
 }
