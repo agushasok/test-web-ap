@@ -18,7 +18,7 @@ export class ListComponent implements OnInit {
     setTimeout(() => {
       this.tgCtx = this.telegramService.tg;
       this.telegramService.tg.MainButton.show();
-      this.telegramService.tg.setHeaderColor('#ff0000');
+      this.telegramService.tg.SettingsButton.hide();
     }, 0);
   }
 }
