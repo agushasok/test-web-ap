@@ -4,8 +4,9 @@ import { ListComponent } from "./pages/list/list.component";
 import { ListItemComponent } from "./pages/list-item/list-item.component";
 
 const routes: Routes = [
-  { path: 'list', component: ListComponent, pathMatch: 'full' },
+  { path: 'list', component: ListComponent },
   { path: 'list/:id', component: ListItemComponent },
+  { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: '**', redirectTo: 'list' }
 ];
 
