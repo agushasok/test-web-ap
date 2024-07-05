@@ -12,7 +12,10 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.telegramService.tg.MainButton.show();
-    this.telegramService.tg.setHeaderColor('#ff0000');
+    this.telegramService.tg.ready();
+    setTimeout(() => {
+      this.telegramService.tg.MainButton.show();
+      this.telegramService.tg.setHeaderColor('#ff0000');
+    }, 0);
   }
 }
