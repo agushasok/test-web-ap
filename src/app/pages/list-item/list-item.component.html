@@ -1,4 +1,6 @@
-<div class="list-item">
-  <h3 class="mb">{{ listItem.title }}</h3>
-  <p>{{ listItem.description }}</p>
-</div>
+<h1 class="centered mb">List item page</h1>
+
+<ng-container *ngIf="item$ | async as listItem">
+  <h3 class="centered">{{listItem.title}}</h3>
+  <p class="centered">{{listItem.description}}</p>
+</ng-container>

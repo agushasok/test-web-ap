@@ -4,6 +4,7 @@ import { ListService } from "../../services/list/list.service";
 import { Observable } from "rxjs";
 import { ListItem } from "../../models/list-item.model";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-list',
@@ -16,14 +17,20 @@ export class ListComponent implements OnInit {
 
   constructor(
     private readonly telegramService: TelegramService,
-    private readonly listService: ListService
+    private readonly listService: ListService,
+    private readonly router: Router
   ) {
   }
 
   ngOnInit() {
     this.telegramService.tg.ready();
     this.telegramService.tg.MainButton.show();
+    this.telegramService.tg.BackButton.hide();
 
     this.listItems = this.listService.getList();
+  }
+
+  openItem(itemId: number) {
+    this.router.navigate(['list', itemId])
   }
 }

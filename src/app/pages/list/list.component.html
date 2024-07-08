@@ -1,7 +1,10 @@
 <h1 class="mb"> There is list of items </h1>
 
-<app-list-item
+<div
+  class="list-item"
   *ngFor="let item of (listItems | async)"
-  [listItem]="item"
+  (click)="openItem(item.id)"
 >
-</app-list-item>
+  <h3 class="mb">{{ item.title }}</h3>
+  <p>{{ item.description }}</p>
+</div>
