@@ -1,1 +1,7 @@
-<h1> There is list of items </h1>
+<h1 class="mb"> There is list of items </h1>
+
+<app-list-item
+  *ngFor="let item of (listItems | async)"
+  [listItem]="item"
+>
+</app-list-item>

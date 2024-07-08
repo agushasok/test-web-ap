@@ -1,5 +1,60 @@
+@tg-background-color: var(--tg-theme-bg-color);
+@tg-secondary-background-color: var(--tg-theme-secondary-bg-color);
+@tg-text-color: var(--tg-theme-text-color);
+@tg-link-text-color: var(--tg-theme-link-color);
+@tg-button-background-color: var(--tg-theme-button-color);
+@tg-button-text-color: var(--tg-theme-button-text-color);
+@tg-hint-text-color: var(--tg-theme-hint-color);
+
+@main-padding: 16px;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: var(--tg-theme-bg-color);
-  color: var(--tg-theme-text-color);
+  font-size: 14px;
+  padding: @main-padding;
+  font-family: "Montserrat", sans-serif;
+  background-color: @tg-background-color;
+  color: @tg-text-color;
+}
+
+a {
+  color: @tg-link-text-color;
+}
+
+button {
+  background-color: @tg-button-background-color;
+  color: @tg-button-text-color;
+}
+
+
+.mb {
+  margin-bottom: @main-padding;
+}
+
+hr {
+  background-color: @tg-hint-text-color;
+  margin-bottom: @main-padding;
+}
+
+.form-control {
+  width: 100%;
+  background-color: @tg-secondary-background-color;
+  color: @tg-text-color;
+  font-family: inherit;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.list-item {
+  overflow: hidden;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, .25);
+  border-radius: 10px;
+  margin-bottom: @main-padding;
+  cursor: pointer;
+  padding: @main-padding;
 }
