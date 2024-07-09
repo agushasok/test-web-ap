@@ -19,9 +19,9 @@ export class FeedbackComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.telegramService.tg.mainButton.setText('Отправить сообщение');
-    this.telegramService.tg.mainButton.show();
-    this.telegramService.tg.mainButton.onClick(this.sendData);
+    this.telegramService.tg.MainButton.setText('Отправить сообщение');
+    this.telegramService.tg.MainButton.show();
+    this.telegramService.tg.MainButton.onClick(this.sendData);
 
     this.feedbackControl.statusChanges
       .pipe(
@@ -29,15 +29,15 @@ export class FeedbackComponent implements OnInit, OnDestroy {
       )
       .subscribe(s => {
         if (s === 'VALID') {
-          this.telegramService.tg.mainButton.enable();
+          this.telegramService.tg.MainButton.enable();
         } else {
-          this.telegramService.tg.mainButton.disable();
+          this.telegramService.tg.MainButton.disable();
         }
       })
   }
 
   sendData = () => {
-    this.telegramService.tg.mainButton.sendData(JSON.stringify({ feedback: this.feedbackControl.value }));
+    this.telegramService.tg.sendData(JSON.stringify({ feedback: this.feedbackControl.value }));
   }
 
   ngOnDestroy() {
