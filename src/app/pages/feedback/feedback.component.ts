@@ -38,7 +38,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
   }
 
   sendData = () => {
-    this.telegramService.tg.sendData(JSON.stringify({ feedback: this.feedbackControl.value }));
+    this.telegramService.tg.sendData({ feedback: this.feedbackControl.value });
   }
 
   disableMainBtn() {
