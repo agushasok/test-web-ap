@@ -1,6 +1,10 @@
 <h1 class="centered mb">List item page</h1>
+<div class="info-wrapper" *ngIf="item$ | async as listItem">
 
-<ng-container *ngIf="item$ | async as listItem">
+  <div class="avatar centered mb">
+    {{ listItem.title[0] + listItem.id }}
+  </div>
+
   <h3 class="centered">{{listItem.title}}</h3>
-  <p class="centered">{{listItem.description}}</p>
-</ng-container>
+  <p class="centered descr">{{listItem.description}}</p>
+</div>
