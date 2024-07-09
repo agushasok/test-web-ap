@@ -1,10 +1,10 @@
-<h1 class="centered mb">List item page</h1>
+<h1 class="centered-text mb">List item page</h1>
 <div class="info-wrapper" *ngIf="item$ | async as listItem">
 
-  <div class="avatar centered mb">
+  <div class="avatar centered-text mb">
     {{ listItem.title[0] + listItem.id }}
   </div>
 
-  <h3 class="centered">{{listItem.title}}</h3>
-  <p class="centered descr">{{listItem.description}}</p>
+  <h3 class="centered-text">{{listItem.title}}</h3>
+  <p class="centered-text descr">{{listItem.description}}</p>
 </div>

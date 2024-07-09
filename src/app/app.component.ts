@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TelegramService } from "./services/telegram.service";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.less'
 })
 export class AppComponent {
-  title = 'test-mini-app';
+  constructor(
+    private readonly telegramService: TelegramService
+  ) {
+    this.telegramService.tg.ready();
+  }
 }

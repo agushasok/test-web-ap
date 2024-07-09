@@ -6,17 +6,21 @@ import { AppComponent } from './app.component';
 import { ListComponent } from './pages/list/list.component';
 import { ListItemComponent } from './pages/list-item/list-item.component';
 import { HttpClientModule } from "@angular/common/http";
+import { FeedbackComponent } from './pages/feedback/feedback.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     ListComponent,
-    ListItemComponent
+    ListItemComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

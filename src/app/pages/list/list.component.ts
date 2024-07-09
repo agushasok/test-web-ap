@@ -23,8 +23,7 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.telegramService.tg.ready();
-    this.telegramService.tg.MainButton.show();
+    this.telegramService.tg.MainButton.hide();
     this.telegramService.tg.BackButton.hide();
 
     this.listItems = this.listService.getList();
