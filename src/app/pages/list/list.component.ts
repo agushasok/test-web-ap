@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TelegramService } from "../../services/telegram.service";
 import { ListService } from "../../services/list/list.service";
 import { Observable } from "rxjs";
@@ -20,7 +20,8 @@ export class ListComponent implements OnInit {
   constructor(
     private readonly telegramService: TelegramService,
     private readonly listService: ListService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef
   ) {
   }
 
@@ -35,6 +36,7 @@ export class ListComponent implements OnInit {
         }
 
         this.randomNUmber = value;
+        this.cdr.detectChanges();
       }
     )
 
