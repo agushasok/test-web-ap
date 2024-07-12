@@ -59,6 +59,7 @@ export class ListComponent implements OnInit {
 
         if (isStored) {
           this.randomNUmber = rndNum;
+          this.cdr.detectChanges();
         }
 
         this.telegramService.tg.showPopup({
