@@ -49,7 +49,7 @@ export class ListComponent implements OnInit {
     const rndNum = Math.round(Math.random() * 10).toString()
     this.telegramService.tg.CloudStorage.setItem(
       this.randomNumberKey,
-      this.randomNUmber,
+      rndNum,
       (err: Error | null, isStored: boolean) => {
         if (err != null) {
           this.telegramService.tg.showAlert(JSON.stringify(err))
