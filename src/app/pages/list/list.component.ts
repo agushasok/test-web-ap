@@ -14,6 +14,8 @@ import { Router } from "@angular/router";
 export class ListComponent implements OnInit {
 
   listItems!: Observable<ListItem[]>;
+  randomNumberKey = 'random_number';
+  randomNUmber?: string;
 
   constructor(
     private readonly telegramService: TelegramService,
@@ -25,11 +27,48 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.telegramService.tg.MainButton.hide();
     this.telegramService.tg.BackButton.hide();
+    this.telegramService.tg.CloudStorage.getItem(
+      this.randomNumberKey,
+      (err: Error | null, value: string) => {
+        if (err != null) {
+          this.telegramService.tg.showAlert(JSON.stringify(err))
+        }
+
+        this.randomNUmber = value;
+      }
+    )
 
     this.listItems = this.listService.getList();
   }
 
   openItem(itemId: number) {
     this.router.navigate(['list', itemId])
+  }
+
+  onSave() {
+    const rndNum = Math.round(Math.random() * 10).toString()
+    this.telegramService.tg.CloudStorage.setItem(
+      this.randomNumberKey,
+      this.randomNUmber,
+      (err: Error | null, isStored: boolean) => {
+        if (err != null) {
+          this.telegramService.tg.showAlert(JSON.stringify(err))
+        }
+
+        if (isStored) {
+          this.randomNUmber = rndNum;
+        }
+
+        this.telegramService.tg.showPopup({
+          title: isStored ? 'Stored' : 'Not stored',
+          message: isStored ? 'New random number is stored' : 'New random number is not stored',
+          buttons: [
+            {
+              type: 'ok'
+            }
+          ]
+        });
+      }
+      );
   }
 }
