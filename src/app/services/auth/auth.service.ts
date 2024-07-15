@@ -171,7 +171,7 @@ export class AuthService {
   }
 
   private redirectToSso(isExit: boolean): void {
-    window.location.assign(this.ssoUrl + `?url=http://${window.location.host}/test-web-ap/browser/auth/&scope=MiniApp` + (isExit ? '&exit=1' : ''));
+    window.location.assign(this.ssoUrl + `?url=http://${window.location.host}/test-web-ap/browser/auth&scope=MiniApp` + (isExit ? '&exit=1' : ''));
   }
 
   private setCurrentUser(userState: UserState): void {
