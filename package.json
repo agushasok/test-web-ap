@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href=https://agushasok.github.io/test-web-ap/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
