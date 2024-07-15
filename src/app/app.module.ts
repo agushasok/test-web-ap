@@ -8,13 +8,15 @@ import { ListItemComponent } from './pages/list-item/list-item.component';
 import { HttpClientModule } from "@angular/common/http";
 import { FeedbackComponent } from './pages/feedback/feedback.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { AuthComponent } from './pages/auth/auth.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListComponent,
     ListItemComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
