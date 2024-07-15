@@ -6,7 +6,7 @@ import { FeedbackComponent } from "./pages/feedback/feedback.component";
 import { AuthComponent } from "./pages/auth/auth.component";
 
 const routes: Routes = [
-  { path: 'auth', component: AuthComponent },
+  { path: 'auth/sso', component: AuthComponent },
   { path: 'list', component: ListComponent },
   { path: 'feedback', component: FeedbackComponent },
   { path: 'list/:id', component: ListItemComponent },
