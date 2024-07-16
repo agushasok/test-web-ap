@@ -11,7 +11,8 @@ export class AuthComponent {
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly authService: AuthService) {
+    private readonly authService: AuthService
+  ) {
   }
 
   ngOnInit(): void {

@@ -9,6 +9,9 @@ import { HttpClientModule } from "@angular/common/http";
 import { FeedbackComponent } from './pages/feedback/feedback.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { AuthComponent } from './pages/auth/auth.component';
+import { IdentificationComponent } from './pages/identification/identification.component';
+import { PasswordFormComponent } from './pages/password-form/password-form.component';
+import { PasswordCreateComponent } from './pages/password-create/password-create.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { AuthComponent } from './pages/auth/auth.component';
     ListComponent,
     ListItemComponent,
     FeedbackComponent,
-    AuthComponent
+    AuthComponent,
+    IdentificationComponent,
+    PasswordFormComponent,
+    PasswordCreateComponent
   ],
   imports: [
     BrowserModule,
