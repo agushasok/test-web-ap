@@ -27,11 +27,15 @@ export class PasswordFormComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit() {
+    console.log('password form init')
     this.passwordControl.valueChanges
       .pipe(
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(v => this.onChange?.(v ?? ''))
+      .subscribe(v => {
+        console.log('password form change');
+        this.onChange?.(v ?? '')
+      })
   }
 
   writeValue(val: string | null): void {
