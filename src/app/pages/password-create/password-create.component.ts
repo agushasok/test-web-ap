@@ -26,8 +26,7 @@ export class PasswordCreateComponent implements OnInit {
   constructor(
     private readonly telegramService: TelegramService,
     private readonly router: Router,
-    private readonly destroyRef: DestroyRef,
-    private readonly cdr: ChangeDetectorRef
+    private readonly destroyRef: DestroyRef
   ) {
   }
 
@@ -62,15 +61,12 @@ export class PasswordCreateComponent implements OnInit {
           )
         }
       });
-
-    this.cdr.detectChanges();
   }
 
   createAgain() {
     this.passwordPhase = PasswordPhase.Create;
     this.createdPassword = '';
     this.passwordCtrl.setValue('');
-    this.cdr.detectChanges();
   }
 
   private setBiometry() {

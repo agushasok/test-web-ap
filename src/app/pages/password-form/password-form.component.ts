@@ -1,4 +1,4 @@
-import { Component, DestroyRef, forwardRef, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
@@ -22,24 +22,25 @@ export class PasswordFormComponent implements ControlValueAccessor, OnInit {
   onTouch?: () => void;
 
   constructor(
+    private readonly cdr: ChangeDetectorRef,
     private readonly destroyRef: DestroyRef
   ) {
   }
 
   ngOnInit() {
-    console.log('password form init')
     this.passwordControl.valueChanges
       .pipe(
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(v => {
-        console.log('password form change');
-        this.onChange?.(v ?? '')
+        this.onChange?.(v ?? '');
+        this.cdr.detectChanges();
       })
   }
 
   writeValue(val: string | null): void {
     this.passwordControl.setValue(val ?? '');
+    this.cdr.detectChanges();
   }
 
   registerOnChange(fn: (val: string) => void) {

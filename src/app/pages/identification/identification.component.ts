@@ -73,4 +73,8 @@ export class IdentificationComponent implements OnInit {
       )
     });
   }
+
+  resetPassword() {
+    this.router.navigate([ '/password-create' ])
+  }
 }
