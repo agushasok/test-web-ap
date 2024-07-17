@@ -33,7 +33,9 @@ export class IdentificationComponent implements OnInit {
         console.log(err);
       }
 
-      if (val == null) {
+      console.log('val: ' + val);
+
+      if (val == null || val === '') {
         this.router.navigate(['/password-create'])
       }
 

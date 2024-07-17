@@ -18,8 +18,8 @@ export class PasswordFormComponent implements ControlValueAccessor, OnInit {
 
   passwordControl = new FormControl('');
 
-  onChange!: (val: string) => void;
-  onTouch!: () => void;
+  onChange?: (val: string) => void;
+  onTouch?: () => void;
 
   constructor(
     private readonly destroyRef: DestroyRef
@@ -31,7 +31,7 @@ export class PasswordFormComponent implements ControlValueAccessor, OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(v => this.onChange(v ?? ''))
+      .subscribe(v => this.onChange?.(v ?? ''))
   }
 
   writeValue(val: string | null): void {
