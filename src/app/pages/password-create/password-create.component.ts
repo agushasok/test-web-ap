@@ -26,6 +26,7 @@ export class PasswordCreateComponent implements OnInit {
   constructor(
     private readonly telegramService: TelegramService,
     private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef,
     private readonly destroyRef: DestroyRef
   ) {
   }
@@ -81,7 +82,9 @@ export class PasswordCreateComponent implements OnInit {
 
       bioManager.requestAccess({ reason: 'Разрешить биометрию' }, () => {
         this.router.navigate(['/identification']);
-      })
+      });
+
+      this.cdr.detectChanges();
     })
   }
 }
