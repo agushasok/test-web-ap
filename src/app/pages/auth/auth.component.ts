@@ -18,7 +18,7 @@ export class AuthComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.authService.setRefreshToken(params['refreshToken']?.trim());
-      this.router.navigate(['/list']);
+      this.router.navigate(['/identification']);
     });
   }
 }

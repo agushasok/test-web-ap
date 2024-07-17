@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { TelegramService } from "../../services/telegram.service";
 import { Router } from "@angular/router";
 import { FormControl } from "@angular/forms";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-identification',
@@ -11,13 +12,13 @@ import { FormControl } from "@angular/forms";
 export class IdentificationComponent implements OnInit {
 
   appPasswordKey = 'app-password';
-  appPassword?: string;
   bioManager: any;
   passwordControl = new FormControl('');
 
   constructor(
     private readonly telegramService: TelegramService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly destroyRef: DestroyRef
   ) {
   }
 
@@ -33,10 +34,24 @@ export class IdentificationComponent implements OnInit {
       }
 
       if (val == null) {
-        this.router.navigate(['password-create'])
+        this.router.navigate(['/password-create'])
       }
 
-      this.appPassword = val;
+      this.passwordControl.valueChanges
+        .pipe(
+          takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe(v => {
+          if (v == null || v.length != 4) {
+            return;
+          }
+
+          if (v === val) {
+            this.router.navigate(['/list'])
+          } else {
+            this.passwordControl.setValue('');
+          }
+        })
 
       this.initIdentification();
     })
@@ -44,7 +59,7 @@ export class IdentificationComponent implements OnInit {
 
   initIdentification() {
     this.bioManager.init(() => {
-      if (!this.bioManager.isAccessGranted) {
+      if (!this.bioManager.isBiometricAvailable || !this.bioManager.isAccessGranted) {
         return;
       }
 
@@ -52,7 +67,7 @@ export class IdentificationComponent implements OnInit {
         { reason: 'Hello!' },
         (isAuthenticated: boolean) => {
           if (isAuthenticated) {
-            this.router.navigate([ 'list' ])
+            this.router.navigate([ '/list' ])
           }
         }
       )
