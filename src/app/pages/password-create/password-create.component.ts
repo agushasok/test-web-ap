@@ -56,6 +56,7 @@ export class PasswordCreateComponent implements OnInit {
               if (err != null || !isSaved) {
                 this.createdPassword = '';
                 this.passwordPhase = PasswordPhase.Create;
+                this.passwordCtrl.setValue('');
               }
 
               this.setBiometry();
@@ -74,17 +75,23 @@ export class PasswordCreateComponent implements OnInit {
   private setBiometry() {
     const bioManager = this.telegramService.tg.BiometricManager;
 
-    bioManager.init(() => {
+    const afterInitCallback = () => {
       if (!bioManager.isBiometricAvailable) {
-        this.router.navigate(['/identification']);
+        this.router.navigate([ '/identification' ]);
         return;
       }
 
       bioManager.requestAccess({ reason: 'Разрешить биометрию' }, () => {
-        this.router.navigate(['/identification']);
+        this.router.navigate([ '/identification' ]);
       });
 
       this.cdr.detectChanges();
-    })
+    }
+
+    if (bioManager.isInited) {
+      afterInitCallback();
+    } else {
+      bioManager.init(afterInitCallback)
+    }
   }
 }
