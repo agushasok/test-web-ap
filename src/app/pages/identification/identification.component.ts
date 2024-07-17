@@ -29,7 +29,7 @@ export class IdentificationComponent implements OnInit {
 
   checkPassword() {
     this.telegramService.tg.CloudStorage.getItem(this.appPasswordKey, (err: Error | null, val?: string) => {
-      if (err == null) {
+      if (err != null) {
         console.log(err);
       }
 
