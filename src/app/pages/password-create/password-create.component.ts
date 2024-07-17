@@ -43,8 +43,8 @@ export class PasswordCreateComponent implements OnInit {
 
         if (this.passwordPhase === PasswordPhase.Create) {
           this.createdPassword = v;
-          this.passwordCtrl.setValue('');
           this.passwordPhase = PasswordPhase.Repeat;
+          this.passwordCtrl.setValue('');
           return;
         }
 
