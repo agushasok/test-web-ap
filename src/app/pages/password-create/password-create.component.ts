@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, OnInit } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import { TelegramService } from "../../services/telegram.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
@@ -26,7 +26,8 @@ export class PasswordCreateComponent implements OnInit {
   constructor(
     private readonly telegramService: TelegramService,
     private readonly router: Router,
-    private readonly destroyRef: DestroyRef
+    private readonly destroyRef: DestroyRef,
+    private readonly cdr: ChangeDetectorRef
   ) {
   }
 
@@ -60,12 +61,16 @@ export class PasswordCreateComponent implements OnInit {
             }
           )
         }
-      })
+      });
+
+    this.cdr.detectChanges();
   }
 
   createAgain() {
     this.passwordPhase = PasswordPhase.Create;
     this.createdPassword = '';
+    this.passwordCtrl.setValue('');
+    this.cdr.detectChanges();
   }
 
   private setBiometry() {
