@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  BehaviorSubject,
   catchError,
   distinct,
   filter,
@@ -38,7 +39,7 @@ export class AuthService {
   private readonly accountUrl = environment.clientDataUrl + '/auth/actions';
   private readonly ssoUrl = environment.ssoUrl;
   private readonly ssoTokenStorageKey = 'sso';
-  private readonly currentUserSub = new Subject<UserState>();
+  private readonly currentUserSub = new BehaviorSubject<UserState | null>(null);
 
   readonly currentUser$ = this.currentUserSub.asObservable().pipe(
     map(x => x?.user),
@@ -46,6 +47,7 @@ export class AuthService {
   );
 
   readonly accessToken$ = this.currentUserSub.pipe(
+    filter(u => u != null),
     switchMap((userState, index) => {
       if (
         userState?.ssoToken?.refreshToken != null
@@ -102,21 +104,24 @@ export class AuthService {
       });
   }
 
-  setRefreshToken(token: string): void {
+  setRefreshToken(token: string, cb?: (err: Error | null, isSaved: boolean) => void): void {
     if (token.length > 0) {
       this.telegramService.tg.CloudStorage.setItem(
         this.ssoTokenStorageKey,
-        token
+        token,
+        (err: Error | null, isSaved: boolean) => {
+          this.setCurrentUser({
+            ssoToken: {
+              refreshToken: token
+            },
+            user: null,
+            isExited: false
+          });
+
+          cb?.(err, isSaved);
+        }
       );
     }
-
-    this.setCurrentUser({
-      ssoToken: {
-        refreshToken: token
-      },
-      user: null,
-      isExited: false
-    });
   }
 
   logout() {
