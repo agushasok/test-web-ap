@@ -1,11 +1,9 @@
-<ng-container *ngIf="!isLoading; else loader">
+<h1 *ngIf="isLoading | async; else content">Loading...</h1>
+
+<ng-template #content>
   <div class="password-wrapper">
     <h3 class="mb"> Войти по код-паролю </h3>
     <app-password-form [formControl]="passwordControl"></app-password-form>
     <button (click)="resetPassword()">Сбросить пароль</button>
   </div>
-</ng-container>
-
-<ng-template #loader>
-  <h1>Loading...</h1>
 </ng-template>

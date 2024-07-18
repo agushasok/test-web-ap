@@ -1,9 +1,10 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, OnInit } from '@angular/core';
 import { TelegramService } from "../../services/telegram.service";
 import { Router } from "@angular/router";
 import { FormControl } from "@angular/forms";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { AuthService } from "../../services/auth/auth.service";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
   selector: 'app-identification',
@@ -15,7 +16,7 @@ export class IdentificationComponent implements OnInit {
   appPasswordKey = 'app-password';
   bioManager: any;
   passwordControl = new FormControl('');
-  isLoading = true;
+  isLoading = new BehaviorSubject(true);
 
   constructor(
     private readonly telegramService: TelegramService,
@@ -29,7 +30,7 @@ export class IdentificationComponent implements OnInit {
     this.authService.accessToken$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.isLoading = false;
+        this.isLoading.next(false);
         this.bioManager = this.telegramService.tg.BiometricManager;
         this.checkPassword();
       });
