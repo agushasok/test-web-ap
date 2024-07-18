@@ -9,7 +9,6 @@ import {
   NEVER,
   of,
   shareReplay,
-  Subject,
   switchMap,
   take
 } from "rxjs";
@@ -96,7 +95,13 @@ export class AuthService {
       this.ssoTokenStorageKey,
       (err: Error | null, token: string) => {
         if (err != null || token.length === 0) {
-          this.setRefreshToken('');
+          this.setCurrentUser({
+            ssoToken: {
+              refreshToken : ''
+            },
+            user: null,
+            isExited: false
+          });
           return;
         }
 

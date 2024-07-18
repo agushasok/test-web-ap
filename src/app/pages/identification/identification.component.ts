@@ -34,7 +34,6 @@ export class IdentificationComponent implements OnInit {
         tap(() => this.isLoading.next(false)),
       )
       .subscribe((a) => {
-        console.log(a);
         this.cdr.detectChanges();
         this.bioManager = this.telegramService.tg.BiometricManager;
         this.checkPassword();
