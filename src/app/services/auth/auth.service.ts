@@ -49,8 +49,6 @@ export class AuthService {
   readonly accessToken$ = this.currentUserSub.pipe(
     filter(u => u != null),
     switchMap((userState, index) => {
-      console.log(userState);
-
       if (
         userState?.ssoToken?.refreshToken != null
         && userState.ssoToken.refreshToken.length > 0
@@ -154,6 +152,8 @@ export class AuthService {
         take(1)
       )
       .subscribe(response => {
+        console.log(response);
+
         if (response) {
           const jwt =  response.jwt;
           const jwtBody = this.decodeJwtBody(jwt);
