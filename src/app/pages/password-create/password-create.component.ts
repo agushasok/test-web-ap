@@ -78,11 +78,27 @@ export class PasswordCreateComponent implements OnInit {
     const afterInitCallback = () => {
       if (!bioManager.isBiometricAvailable) {
         this.router.navigate([ '/identification' ]);
+        this.cdr.detectChanges();
         return;
       }
 
-      bioManager.requestAccess({ reason: 'Разрешить биометрию' }, () => {
-        this.router.navigate([ '/identification' ]);
+      bioManager.requestAccess({ reason: 'Разрешить биометрию' }, (isGranted: boolean) => {
+        if (!isGranted) {
+          this.telegramService.tg.showConfirm(
+            'Предоставьте доступ через настройки',
+            (isOkBtnPressed: boolean) => {
+              if (isOkBtnPressed) {
+                bioManager.openSettings;
+              }
+
+              this.router.navigate([ '/identification' ]);
+              this.cdr.detectChanges();
+            }
+          );
+        } else {
+          this.router.navigate([ '/identification' ]);
+          this.cdr.detectChanges();
+        }
       });
 
       this.cdr.detectChanges();
