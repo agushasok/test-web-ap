@@ -105,23 +105,21 @@ export class AuthService {
   }
 
   setRefreshToken(token: string, cb?: (err: Error | null, isSaved: boolean) => void): void {
-    if (token.length > 0) {
-      this.telegramService.tg.CloudStorage.setItem(
-        this.ssoTokenStorageKey,
-        token,
-        (err: Error | null, isSaved: boolean) => {
-          this.setCurrentUser({
-            ssoToken: {
-              refreshToken: token
-            },
-            user: null,
-            isExited: false
-          });
+    this.telegramService.tg.CloudStorage.setItem(
+      this.ssoTokenStorageKey,
+      token,
+      (err: Error | null, isSaved: boolean) => {
+        this.setCurrentUser({
+          ssoToken: {
+            refreshToken: token
+          },
+          user: null,
+          isExited: false
+        });
 
-          cb?.(err, isSaved);
-        }
-      );
-    }
+        cb?.(err, isSaved);
+      }
+    );
   }
 
   logout() {
