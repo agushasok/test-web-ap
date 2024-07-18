@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  BehaviorSubject,
   catchError,
   distinct,
   filter,
@@ -9,6 +8,7 @@ import {
   NEVER,
   of,
   shareReplay,
+  Subject,
   switchMap,
   take
 } from "rxjs";
@@ -38,7 +38,7 @@ export class AuthService {
   private readonly accountUrl = environment.clientDataUrl + '/auth/actions';
   private readonly ssoUrl = environment.ssoUrl;
   private readonly ssoTokenStorageKey = 'sso';
-  private readonly currentUserSub = new BehaviorSubject<UserState | null>(null);
+  private readonly currentUserSub = new Subject<UserState>();
 
   readonly currentUser$ = this.currentUserSub.asObservable().pipe(
     map(x => x?.user),
@@ -49,8 +49,8 @@ export class AuthService {
     switchMap((userState, index) => {
       if (
         userState?.ssoToken?.refreshToken != null
-        && !!userState.ssoToken.refreshToken.length
-        && (userState.ssoToken.jwt == null || !userState.ssoToken.jwt.length)
+        && userState.ssoToken.refreshToken.length > 0
+        && (userState.ssoToken.jwt == null || userState.ssoToken.jwt.length == 0)
       ) {
         // refreshToken is set after login. Need to get jwt
         this.refreshToken(userState);
@@ -62,8 +62,7 @@ export class AuthService {
           this.refreshToken(userState!);
           return NEVER;
         }
-      }
-      else {
+      } else {
         // user is not authorized
         this.telegramService.tg.CloudStorage.removeItem(this.ssoTokenStorageKey);
         this.redirectToSso(userState?.isExited ?? false);
@@ -94,19 +93,21 @@ export class AuthService {
     this.telegramService.tg.CloudStorage.getItem(
       this.ssoTokenStorageKey,
       (err: Error | null, token: string) => {
-        if (err != null || (token ?? '') === '') {
+        if (err != null || token.length === 0) {
+          this.setRefreshToken('');
           return;
         }
 
-        this.setCurrentUser({
-          ssoToken: JSON.parse(token ?? 'null') ?? null,
-          user: null,
-          isExited: false
-        });
+        this.setRefreshToken(token);
       });
   }
 
   setRefreshToken(token: string): void {
+    this.telegramService.tg.CloudStorage.setItem(
+      this.ssoTokenStorageKey,
+      token
+    );
+
     this.setCurrentUser({
       ssoToken: {
         refreshToken: token
@@ -140,14 +141,6 @@ export class AuthService {
             clientId: jwtBody.clientid,
             login: jwtBody.sub
           };
-
-          this.telegramService.tg.CloudStorage.setItem(
-            this.ssoTokenStorageKey,
-            JSON.stringify({
-              refreshToken: userState.ssoToken!.refreshToken,
-              jwt: jwt
-            })
-          );
 
           this.setCurrentUser({
             ...userState,
