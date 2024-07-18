@@ -1,4 +1,3 @@
-<ng-container *ngIf="!isLoading; else loader">
   <h1 class="mb"> There is list of items </h1>
 
   <div
@@ -17,8 +16,3 @@
   <button (click)="onSave()">
     Save
   </button>
-</ng-container>
-
-<ng-template #loader>
-  <h1>Loading...</h1>
-</ng-template>

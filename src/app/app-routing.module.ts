@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: 'password-create', component: PasswordCreateComponent },
   { path: 'feedback', component: FeedbackComponent },
   { path: 'list/:id', component: ListItemComponent },
-  { path: '', redirectTo: 'list', pathMatch: 'full' },
-  { path: '**', redirectTo: 'list' }
+  { path: '', redirectTo: 'identification', pathMatch: 'full' },
+  { path: '**', redirectTo: 'identification' }
 ];
 
 @NgModule({

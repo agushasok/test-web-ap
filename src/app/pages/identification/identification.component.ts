@@ -3,6 +3,7 @@ import { TelegramService } from "../../services/telegram.service";
 import { Router } from "@angular/router";
 import { FormControl } from "@angular/forms";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { AuthService } from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-identification',
@@ -14,17 +15,25 @@ export class IdentificationComponent implements OnInit {
   appPasswordKey = 'app-password';
   bioManager: any;
   passwordControl = new FormControl('');
+  isLoading = true;
 
   constructor(
     private readonly telegramService: TelegramService,
     private readonly router: Router,
+    private readonly authService: AuthService,
     private readonly destroyRef: DestroyRef
   ) {
   }
 
   ngOnInit() {
-    this.bioManager = this.telegramService.tg.BiometricManager;
-    this.checkPassword();
+    this.authService.accessToken$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.isLoading = false;
+        this.bioManager = this.telegramService.tg.BiometricManager;
+        this.checkPassword();
+      });
+
   }
 
   checkPassword() {
