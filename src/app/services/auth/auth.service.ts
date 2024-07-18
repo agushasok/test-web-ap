@@ -152,8 +152,6 @@ export class AuthService {
         take(1)
       )
       .subscribe(response => {
-        console.log(response);
-
         if (response) {
           const jwt =  response.jwt;
           const jwtBody = this.decodeJwtBody(jwt);
