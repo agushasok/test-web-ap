@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { FormControl } from "@angular/forms";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { AuthService } from "../../services/auth/auth.service";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, tap } from "rxjs";
 
 @Component({
   selector: 'app-identification',
@@ -22,15 +22,19 @@ export class IdentificationComponent implements OnInit {
     private readonly telegramService: TelegramService,
     private readonly router: Router,
     private readonly authService: AuthService,
+    private readonly cdr: ChangeDetectorRef,
     private readonly destroyRef: DestroyRef
   ) {
   }
 
   ngOnInit() {
     this.authService.accessToken$
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        tap(() => this.isLoading.next(false)),
+      )
       .subscribe(() => {
-        this.isLoading.next(false);
+        this.cdr.detectChanges();
         this.bioManager = this.telegramService.tg.BiometricManager;
         this.checkPassword();
       });
