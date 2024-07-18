@@ -49,6 +49,8 @@ export class AuthService {
   readonly accessToken$ = this.currentUserSub.pipe(
     filter(u => u != null),
     switchMap((userState, index) => {
+      console.log(userState);
+
       if (
         userState?.ssoToken?.refreshToken != null
         && userState.ssoToken.refreshToken.length > 0
