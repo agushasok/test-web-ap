@@ -119,6 +119,20 @@ export class AuthService {
     });
   }
 
+  logout() {
+    this.telegramService.tg.CloudStorage.removeItem(
+      this.ssoTokenStorageKey,
+      (err: Error | null, isRemoved: boolean) => {
+        if (err != null || !isRemoved) {
+          console.log(err ?? 'Not removed');
+          return
+        }
+
+        this.redirectToSso(true);
+      }
+    );
+  }
+
   private refreshToken(userState: UserState): void {
     this.http.post<RefreshTokenResponse>(
         `${this.accountUrl}/refresh`,
