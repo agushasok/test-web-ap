@@ -103,10 +103,12 @@ export class AuthService {
   }
 
   setRefreshToken(token: string): void {
-    this.telegramService.tg.CloudStorage.setItem(
-      this.ssoTokenStorageKey,
-      token
-    );
+    if (token.length > 0) {
+      this.telegramService.tg.CloudStorage.setItem(
+        this.ssoTokenStorageKey,
+        token
+      );
+    }
 
     this.setCurrentUser({
       ssoToken: {

@@ -33,7 +33,10 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.authService.accessToken$
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.isLoading = false);
+      .subscribe(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      });
 
     this.telegramService.tg.MainButton.hide();
     this.telegramService.tg.BackButton.hide();
