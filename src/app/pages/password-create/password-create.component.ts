@@ -64,6 +64,9 @@ export class PasswordCreateComponent implements OnInit {
               this.setBiometry();
             }
           )
+        } else {
+          this.passwordCtrl.setValue('');
+          this.cdr.detectChanges();
         }
       });
   }
@@ -72,6 +75,7 @@ export class PasswordCreateComponent implements OnInit {
     this.passwordPhase = PasswordPhase.Create;
     this.createdPassword = '';
     this.passwordCtrl.setValue('');
+    this.cdr.detectChanges();
   }
 
   private setBiometry() {

@@ -72,7 +72,7 @@ export class IdentificationComponent implements OnInit {
   }
 
   initIdentification() {
-    this.bioManager.init(() => {
+    const bioInitCb = () => {
       if (!this.bioManager.isBiometricAvailable || !this.bioManager.isAccessGranted) {
         return;
       }
@@ -85,7 +85,13 @@ export class IdentificationComponent implements OnInit {
           }
         }
       )
-    });
+    }
+
+    if (this.bioManager.isInited) {
+      bioInitCb();
+    } else {
+      this.bioManager.init(bioInitCb);
+    }
   }
 
   resetPassword() {
