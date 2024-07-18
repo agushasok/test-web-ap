@@ -18,6 +18,8 @@ export class ListComponent implements OnInit {
   randomNumberKey = 'random_number';
   randomNUmber?: string;
 
+  isLoading = true;
+
   constructor(
     private readonly telegramService: TelegramService,
     private readonly listService: ListService,
@@ -31,7 +33,8 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.authService.accessToken$
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+      .subscribe(() => this.isLoading = false);
+
     this.telegramService.tg.MainButton.hide();
     this.telegramService.tg.BackButton.hide();
     this.telegramService.tg.CloudStorage.getItem(
