@@ -45,6 +45,7 @@ export class PasswordCreateComponent implements OnInit {
           this.createdPassword = v;
           this.passwordPhase = PasswordPhase.Repeat;
           this.passwordCtrl.setValue('');
+          this.cdr.detectChanges();
           return;
         }
 
@@ -57,6 +58,7 @@ export class PasswordCreateComponent implements OnInit {
                 this.createdPassword = '';
                 this.passwordPhase = PasswordPhase.Create;
                 this.passwordCtrl.setValue('');
+                this.cdr.detectChanges();
               }
 
               this.setBiometry();
