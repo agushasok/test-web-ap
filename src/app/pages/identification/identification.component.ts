@@ -73,6 +73,8 @@ export class IdentificationComponent implements OnInit {
 
   initIdentification() {
     const bioInitCb = () => {
+      console.log(this.bioManager);
+
       if (!this.bioManager.isBiometricAvailable || !this.bioManager.isAccessGranted) {
         return;
       }
